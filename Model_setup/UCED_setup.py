@@ -21,9 +21,7 @@ all_scenarios = ['2012-base','2030-Offshore-2x','2030-Offshore-3x','2030-Offshor
              '2030-ISONE','2040-Offshore-2x','2040-Offshore-3x','2040-Offshore-4x','2040-Offshore-5x',\
              '2040-Offshore-ReplaceISO','2040-Onshore-0.5x','2040-Onshore-2x','2040-Onshore-3x','2040-Onshore-ReplaceISO',\
              '2040-PV-2x','2040-PV-3x','2040-PV-4x','2040-PV-5x','2040-PV-6x','2040-PV-ReplaceISO','2040-NREL','2040-ISONE']
-    
-all_scenarios= ['2012-base']
-    
+      
 for scenario in all_scenarios:
      
     print('Creating files for {} scenario...'.format(scenario))
