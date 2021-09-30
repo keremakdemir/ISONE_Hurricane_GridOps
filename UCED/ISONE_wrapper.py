@@ -495,57 +495,57 @@ def sim(days):
                             mwh_3.append((index[0],index[1]+((day-1)*24),round(varobject[index].value, 3),zone.values[0],'Imports',round(marginal_cost, 3)))
 
 
-            if a=='on':
+            # if a=='on':
 
-                for index in varobject:
+            #     for index in varobject:
                     
-                    name = index[0]
-                    g = df_generators[df_generators['name']==name]
-                    zone = g['zone']
+            #         name = index[0]
+            #         g = df_generators[df_generators['name']==name]
+            #         zone = g['zone']
                 
-                    if int(index[1]>0 and index[1]<horizon_end):
+            #         if int(index[1]>0 and index[1]<horizon_end):
                 
-                        on.append((index[0],index[1]+((day-1)*24),varobject[index].value,zone.values[0]))
+            #             on.append((index[0],index[1]+((day-1)*24),varobject[index].value,zone.values[0]))
                 
 
-            if a=='switch':
+            # if a=='switch':
               
 
-                for index in varobject:
+            #     for index in varobject:
                     
-                    name = index[0]
-                    g = df_generators[df_generators['name']==name]
-                    zone = g['zone']
+            #         name = index[0]
+            #         g = df_generators[df_generators['name']==name]
+            #         zone = g['zone']
                     
-                    if int(index[1]>0 and index[1]<horizon_end):
+            #         if int(index[1]>0 and index[1]<horizon_end):
                         
-                        switch.append((index[0],index[1]+((day-1)*24),varobject[index].value,zone.values[0]))
+            #             switch.append((index[0],index[1]+((day-1)*24),varobject[index].value,zone.values[0]))
                 
 
-            if a=='srsv':
+            # if a=='srsv':
 
-                for index in varobject:
+            #     for index in varobject:
                     
-                    name = index[0]
-                    g = df_generators[df_generators['name']==name]
-                    zone = g['zone']
+            #         name = index[0]
+            #         g = df_generators[df_generators['name']==name]
+            #         zone = g['zone']
                     
-                    if int(index[1]>0 and index[1]<horizon_end):
+            #         if int(index[1]>0 and index[1]<horizon_end):
                         
-                        srsv.append((index[0],index[1]+((day-1)*24),round(varobject[index].value, 3),zone.values[0]))
+            #             srsv.append((index[0],index[1]+((day-1)*24),round(varobject[index].value, 3),zone.values[0]))
                 
 
-            if a=='nrsv':
+            # if a=='nrsv':
 
-                for index in varobject:
+            #     for index in varobject:
                     
-                    name = index[0]
-                    g = df_generators[df_generators['name']==name]
-                    zone = g['zone']
+            #         name = index[0]
+            #         g = df_generators[df_generators['name']==name]
+            #         zone = g['zone']
                     
-                    if int(index[1]>0 and index[1]<horizon_end):
+            #         if int(index[1]>0 and index[1]<horizon_end):
                         
-                        nrsv.append((index[0],index[1]+((day-1)*24),round(varobject[index].value, 3),zone.values[0]))
+            #             nrsv.append((index[0],index[1]+((day-1)*24),round(varobject[index].value, 3),zone.values[0]))
                 
 
             if a=='offshorewind':
@@ -647,31 +647,31 @@ def sim(days):
     mwh_1_pd=pd.DataFrame(mwh_1,columns=['Generator','Time','Value','Zones','Type','$/MWh'])
     mwh_2_pd=pd.DataFrame(mwh_2,columns=['Generator','Time','Value','Zones','Type','$/MWh'])
     mwh_3_pd=pd.DataFrame(mwh_3,columns=['Generator','Time','Value','Zones','Type','$/MWh'])
-    on_pd=pd.DataFrame(on,columns=['Generator','Time','Value','Zones'])
-    switch_pd=pd.DataFrame(switch,columns=['Generator','Time','Value','Zones'])
-    srsv_pd=pd.DataFrame(srsv,columns=['Generator','Time','Value','Zones'])
-    nrsv_pd=pd.DataFrame(nrsv,columns=['Generator','Time','Value','Zones'])
+    # on_pd=pd.DataFrame(on,columns=['Generator','Time','Value','Zones'])
+    # switch_pd=pd.DataFrame(switch,columns=['Generator','Time','Value','Zones'])
+    # srsv_pd=pd.DataFrame(srsv,columns=['Generator','Time','Value','Zones'])
+    # nrsv_pd=pd.DataFrame(nrsv,columns=['Generator','Time','Value','Zones'])
     solar_pd=pd.DataFrame(solar,columns=['Zone','Time','Value'])
     onshore_wind_pd=pd.DataFrame(onshore_wind,columns=['Zone','Time','Value'])
     offshore_wind_pd=pd.DataFrame(offshore_wind,columns=['Zone','Time','Value'])
     must_run_pd=pd.DataFrame(must_run,columns=['Zone','Time','Value'])
     flow_pd=pd.DataFrame(flow,columns=['Source','Sink','Time','Value'])
     shadow_price=pd.DataFrame(Duals,columns=['Constraint','Time','Value'])
-    objective = pd.DataFrame(System_cost,columns=['Value'])
+    # objective = pd.DataFrame(System_cost,columns=['Value'])
 
     flow_pd.to_csv('flow.csv',index=False)
     mwh_1_pd.to_csv('mwh_1.csv',index=False)
     mwh_2_pd.to_csv('mwh_2.csv',index=False)
     mwh_3_pd.to_csv('mwh_3.csv',index=False)
-    on_pd.to_csv('on.csv',index=False)
-    switch_pd.to_csv('switch.csv',index=False)
-    srsv_pd.to_csv('srsv.csv',index=False)
-    nrsv_pd.to_csv('nrsv.csv',index=False)
+    # on_pd.to_csv('on.csv',index=False)
+    # switch_pd.to_csv('switch.csv',index=False)
+    # srsv_pd.to_csv('srsv.csv',index=False)
+    # nrsv_pd.to_csv('nrsv.csv',index=False)
     solar_pd.to_csv('solar_out.csv',index=False)
     onshore_wind_pd.to_csv('onshore_wind_out.csv',index=False)
     offshore_wind_pd.to_csv('offshore_wind_out.csv',index=False)
     must_run_pd.to_csv('mustrun_out.csv',index=False)
     shadow_price.to_csv('shadow_price.csv',index=False)
-    objective.to_csv('obj_function.csv',index=False)
+    # objective.to_csv('obj_function.csv',index=False)
 
     return None

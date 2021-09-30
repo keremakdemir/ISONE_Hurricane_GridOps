@@ -353,7 +353,7 @@ def SysCost(model):
     onshore_wind_cost = sum(model.onshorewind[j,i]*0.01 for i in model.hh_periods for j in model.zones)
     offshore_wind_cost = sum(model.offshorewind[j,i]*0.01 for i in model.hh_periods for j in model.zones)
     solar_cost = sum(model.solar[j,i]*0.01 for i in model.hh_periods for j in model.zones)
-    mustrun_cost = sum(model.mustrun[j,i]*0.01 for i in model.hh_periods for j in model.zones)
+    mustrun_cost = sum(model.mustrun[j,i]*0.001 for i in model.hh_periods for j in model.zones)
     return fixed + coal1 + coal2 + coal3 + gas1_1 + gas1_2 + gas1_3 + gas1_4 + gas1_5 + gas1_6 + gas1_7 + gas1_8 + gas2_1 + gas2_2 + gas2_3 + gas2_4 + gas2_5 + gas2_6 + gas2_7 + gas2_8 + gas3_1 + gas3_2 + gas3_3 + gas3_4 + gas3_5 + gas3_6 + gas3_7 + gas3_8 + Oil1_1 + Oil1_2 + Oil1_3 + Oil1_4 + Oil1_5 + Oil1_6 + Oil1_7 + Oil1_8 + Oil2_1 + Oil2_2 + Oil2_3 + Oil2_4 + Oil2_5 + Oil2_6 + Oil2_7 + Oil2_8 + Oil3_1 + Oil3_2 + Oil3_3 + Oil3_4 + Oil3_5 + Oil3_6 + Oil3_7 + Oil3_8 + slack1 + slack2 + slack3 + starts + exchange + NY_Imports_CT1 + NY_Imports_CT2 + NY_Imports_CT3 + NY_Imports_WCMA1 + NY_Imports_WCMA2 + NY_Imports_WCMA3 + NY_Imports_VT1 + NY_Imports_VT2 + NY_Imports_VT3 + HQ_Imports_VT1 + HQ_Imports_VT2 + HQ_Imports_VT3 + NB_Imports_ME1 + NB_Imports_ME2 + NB_Imports_ME3 + hydro1 + hydro2 + hydro3 + onshore_wind_cost + offshore_wind_cost + solar_cost + mustrun_cost
 model.SystemCost = Objective(rule=SysCost, sense=minimize)
     
