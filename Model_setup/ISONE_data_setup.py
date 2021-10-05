@@ -194,6 +194,36 @@ def setup(selected_scenario):
         df_offshore_data = Offshore_NREL_2040.copy()        
         df_offshore_data = df_offshore_data*5
         
+    elif selected_scenario == '2040-Offshore-6x':
+        df_solar_data = Solar_NREL_2040.copy()
+        df_onshore_data = Onshore_NREL_2040.copy()
+        df_offshore_data = Offshore_NREL_2040.copy()        
+        df_offshore_data = df_offshore_data*6
+        
+    elif selected_scenario == '2040-Offshore-7x':
+        df_solar_data = Solar_NREL_2040.copy()
+        df_onshore_data = Onshore_NREL_2040.copy()
+        df_offshore_data = Offshore_NREL_2040.copy()        
+        df_offshore_data = df_offshore_data*7
+        
+    elif selected_scenario == '2040-Offshore-8x':
+        df_solar_data = Solar_NREL_2040.copy()
+        df_onshore_data = Onshore_NREL_2040.copy()
+        df_offshore_data = Offshore_NREL_2040.copy()        
+        df_offshore_data = df_offshore_data*8
+        
+    elif selected_scenario == '2040-Offshore-9x':
+        df_solar_data = Solar_NREL_2040.copy()
+        df_onshore_data = Onshore_NREL_2040.copy()
+        df_offshore_data = Offshore_NREL_2040.copy()        
+        df_offshore_data = df_offshore_data*9
+        
+    elif selected_scenario == '2040-Offshore-10x':
+        df_solar_data = Solar_NREL_2040.copy()
+        df_onshore_data = Onshore_NREL_2040.copy()
+        df_offshore_data = Offshore_NREL_2040.copy()        
+        df_offshore_data = df_offshore_data*10
+        
     elif selected_scenario == '2040-Offshore-ReplaceISO':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
