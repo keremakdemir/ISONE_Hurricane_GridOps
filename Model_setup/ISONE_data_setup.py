@@ -33,14 +33,25 @@ Solar_NREL_2012 = pd.read_excel('ISONE_data_file/Scenarios/Renewable_timeseries/
 Solar_NREL_2030 = pd.read_excel('ISONE_data_file/Scenarios/Renewable_timeseries/Solar_NREL.xlsx',header=0,sheet_name='All Zones Time Series - 2030')
 Solar_NREL_2040 = pd.read_excel('ISONE_data_file/Scenarios/Renewable_timeseries/Solar_NREL.xlsx',header=0,sheet_name='All Zones Time Series - 2040')
 
+Solar_ISO_BTM_2012 = pd.read_excel('ISONE_data_file/Scenarios/Renewable_timeseries/Solar_ISO_BTM.xlsx',header=0,sheet_name='All Zones Time Series - 2018')
+Solar_ISO_BTM_2030 = pd.read_excel('ISONE_data_file/Scenarios/Renewable_timeseries/Solar_ISO_BTM.xlsx',header=0,sheet_name='All Zones Time Series - 2030')
+Solar_ISO_BTM_2040 = pd.read_excel('ISONE_data_file/Scenarios/Renewable_timeseries/Solar_ISO_BTM.xlsx',header=0,sheet_name='All Zones Time Series - 2040')
+Solar_NREL_BTM_2012 = pd.read_excel('ISONE_data_file/Scenarios/Renewable_timeseries/Solar_NREL_BTM.xlsx',header=0,sheet_name='All Zones Time Series - 2018')
+Solar_NREL_BTM_2030 = pd.read_excel('ISONE_data_file/Scenarios/Renewable_timeseries/Solar_NREL_BTM.xlsx',header=0,sheet_name='All Zones Time Series - 2030')
+Solar_NREL_BTM_2040 = pd.read_excel('ISONE_data_file/Scenarios/Renewable_timeseries/Solar_NREL_BTM.xlsx',header=0,sheet_name='All Zones Time Series - 2040')
+
 #read transmission path parameters into DataFrame
 df_paths = pd.read_csv('ISONE_data_file/paths.csv',header=0)
 
 #list zones
 zones = ['CT', 'ME', 'NH', 'NEMA', 'RI', 'SEMA', 'VT', 'WCMA']
 
-#time series of load for each zone
-df_load_all = pd.read_excel('Demand/Hourly_demand.xlsx',header=0)
+#reading demand timeseries
+df_load_2018 = pd.read_excel('Demand/Hourly_demand_2018.xlsx',header=0)
+df_load_2030_ISO = pd.read_excel('Demand/Hourly_demand_2030_ISO.xlsx',header=0)
+df_load_2040_ISO = pd.read_excel('Demand/Hourly_demand_2040_ISO.xlsx',header=0)
+df_load_2030_NREL = pd.read_excel('Demand/Hourly_demand_2030_NREL.xlsx',header=0)
+df_load_2040_NREL = pd.read_excel('Demand/Hourly_demand_2040_NREL.xlsx',header=0)
 
 #daily hydropower availability 
 df_hydro = pd.read_csv('Hydropower/ISONE_dispatchable_hydro.csv',header=0)
@@ -73,238 +84,274 @@ def setup(selected_scenario):
     hourly_mustrun = np.repeat(mustrun_each_zone, 384, axis=0)
     df_total_must_run = pd.DataFrame(hourly_mustrun,columns=zones) 
     
-    #saving relevant renewable time series
+    #saving relevant renewable and demand time series
     if selected_scenario == '2012-base':
         df_solar_data = Solar_NREL_2012.copy()
         df_onshore_data = Onshore_NREL_2012.copy()
         df_offshore_data = Offshore_NREL_2012.copy()
+        df_load = df_load_2018.copy()
         
     elif selected_scenario == '2030-Offshore-2x':
         df_solar_data = Solar_NREL_2030.copy()
         df_onshore_data = Onshore_NREL_2030.copy()
         df_offshore_data = Offshore_NREL_2030.copy()        
         df_offshore_data = df_offshore_data*2
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-Offshore-3x':
         df_solar_data = Solar_NREL_2030.copy()
         df_onshore_data = Onshore_NREL_2030.copy()
         df_offshore_data = Offshore_NREL_2030.copy()        
         df_offshore_data = df_offshore_data*3
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-Offshore-4x':
         df_solar_data = Solar_NREL_2030.copy()
         df_onshore_data = Onshore_NREL_2030.copy()
         df_offshore_data = Offshore_NREL_2030.copy()        
         df_offshore_data = df_offshore_data*4
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-Offshore-ReplaceISO':
         df_solar_data = Solar_NREL_2030.copy()
         df_onshore_data = Onshore_NREL_2030.copy()
         df_offshore_data = Offshore_ISO_2030.copy() 
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-Onshore-0.5x':
         df_solar_data = Solar_NREL_2030.copy()
         df_onshore_data = Onshore_NREL_2030.copy()
         df_onshore_data = df_onshore_data*0.5
         df_offshore_data = Offshore_NREL_2030.copy()
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-Onshore-2x':
         df_solar_data = Solar_NREL_2030.copy()
         df_onshore_data = Onshore_NREL_2030.copy()
         df_onshore_data = df_onshore_data*2
         df_offshore_data = Offshore_NREL_2030.copy()
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-Onshore-3x':
         df_solar_data = Solar_NREL_2030.copy()
         df_onshore_data = Onshore_NREL_2030.copy()
         df_onshore_data = df_onshore_data*3
         df_offshore_data = Offshore_NREL_2030.copy()
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-Onshore-ReplaceISO':
         df_solar_data = Solar_NREL_2030.copy()
         df_onshore_data = Onshore_ISO_2030.copy()
         df_offshore_data = Offshore_NREL_2030.copy()
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-PV-2x':
         df_solar_data = Solar_NREL_2030.copy()
         df_solar_data = df_solar_data*2
         df_onshore_data = Onshore_NREL_2030.copy()
         df_offshore_data = Offshore_NREL_2030.copy()
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-PV-3x':
         df_solar_data = Solar_NREL_2030.copy()
         df_solar_data = df_solar_data*3
         df_onshore_data = Onshore_NREL_2030.copy()
         df_offshore_data = Offshore_NREL_2030.copy()
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-PV-4x':
         df_solar_data = Solar_NREL_2030.copy()
         df_solar_data = df_solar_data*4
         df_onshore_data = Onshore_NREL_2030.copy()
         df_offshore_data = Offshore_NREL_2030.copy()
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-PV-5x':
         df_solar_data = Solar_NREL_2030.copy()
         df_solar_data = df_solar_data*5
         df_onshore_data = Onshore_NREL_2030.copy()
         df_offshore_data = Offshore_NREL_2030.copy()
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-PV-6x':
         df_solar_data = Solar_NREL_2030.copy()
         df_solar_data = df_solar_data*6
         df_onshore_data = Onshore_NREL_2030.copy()
         df_offshore_data = Offshore_NREL_2030.copy()
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-PV-ReplaceISO':
         df_solar_data = Solar_ISO_2030.copy()
         df_onshore_data = Onshore_NREL_2030.copy()
         df_offshore_data = Offshore_NREL_2030.copy()
+        df_load = df_load_2030_ISO.copy()
         
     elif selected_scenario == '2030-NREL':
         df_solar_data = Solar_NREL_2030.copy()
         df_onshore_data = Onshore_NREL_2030.copy()
         df_offshore_data = Offshore_NREL_2030.copy()
+        df_load = df_load_2030_NREL.copy()
         
     elif selected_scenario == '2030-ISONE':
         df_solar_data = Solar_ISO_2030.copy()
         df_onshore_data = Onshore_ISO_2030.copy()
         df_offshore_data = Offshore_ISO_2030.copy()
+        df_load = df_load_2030_ISO.copy()
         
     elif selected_scenario == '2040-Offshore-2x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()        
         df_offshore_data = df_offshore_data*2
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Offshore-3x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()        
         df_offshore_data = df_offshore_data*3
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Offshore-4x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()        
         df_offshore_data = df_offshore_data*4
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Offshore-5x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()        
         df_offshore_data = df_offshore_data*5
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Offshore-6x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()        
         df_offshore_data = df_offshore_data*6
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Offshore-7x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()        
         df_offshore_data = df_offshore_data*7
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Offshore-8x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()        
         df_offshore_data = df_offshore_data*8
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Offshore-9x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()        
         df_offshore_data = df_offshore_data*9
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Offshore-10x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()        
         df_offshore_data = df_offshore_data*10
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Offshore-ReplaceISO':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_ISO_2040.copy()
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Onshore-0.5x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_onshore_data = df_onshore_data*0.5
         df_offshore_data = Offshore_NREL_2040.copy()
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Onshore-2x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_onshore_data = df_onshore_data*2
         df_offshore_data = Offshore_NREL_2040.copy()
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Onshore-3x':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_onshore_data = df_onshore_data*3
         df_offshore_data = Offshore_NREL_2040.copy()
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-Onshore-ReplaceISO':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_ISO_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-PV-2x':
         df_solar_data = Solar_NREL_2040.copy()
         df_solar_data = df_solar_data*2
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-PV-3x':
         df_solar_data = Solar_NREL_2040.copy()
         df_solar_data = df_solar_data*3
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-PV-4x':
         df_solar_data = Solar_NREL_2040.copy()
         df_solar_data = df_solar_data*4
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-PV-5x':
         df_solar_data = Solar_NREL_2040.copy()
         df_solar_data = df_solar_data*5
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-PV-6x':
         df_solar_data = Solar_NREL_2040.copy()
         df_solar_data = df_solar_data*6
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-PV-ReplaceISO':
         df_solar_data = Solar_ISO_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()
+        df_load = df_load_2040_ISO.copy()
         
     elif selected_scenario == '2040-NREL':
         df_solar_data = Solar_NREL_2040.copy()
         df_onshore_data = Onshore_NREL_2040.copy()
         df_offshore_data = Offshore_NREL_2040.copy()
+        df_load = df_load_2040_NREL.copy()
         
     elif selected_scenario == '2040-ISONE':
         df_solar_data = Solar_ISO_2040.copy()
         df_onshore_data = Onshore_ISO_2040.copy()
         df_offshore_data = Offshore_ISO_2040.copy()
+        df_load = df_load_2040_ISO.copy()
         
     #time series of natural gas prices for each zone
     df_ng = df_ng_all.copy()
     
     #time series of oil prices for each zone
     df_oil = df_oil_all.copy()
-    
-    #time series of load for each zone
-    df_load = df_load_all.copy()
     
     #time series of operational reserves for each zone
     rv= df_load.values
